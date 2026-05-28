@@ -1,0 +1,61 @@
+# =============================================================================
+# Mirror Mundial — Supabase local config
+# Archivo: supabase/config.toml
+# =============================================================================
+# Este archivo configura el entorno local de Supabase CLI.
+# Para producción, los valores de SMTP y secrets se configuran en el
+# dashboard de Supabase (ver README.md → Sección "Configuración de Auth").
+# =============================================================================
+
+[project]
+id = "mirror-mundial"
+
+[api]
+port = 54321
+schemas = ["public", "storage", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+shadow_port = 54320
+major_version = 15
+
+[studio]
+port = 54323
+
+[inbucket]
+port = 54324
+
+[auth]
+site_url = "https://mirror.com.co"
+# URLs permitidas para redirección después del magic link.
+# En desarrollo agregar http://localhost:54321 y la URL del widget en Vercel.
+additional_redirect_urls = [
+  "https://mirror.com.co",
+  "https://mirror.com.co/**",
+]
+
+# Tiempo de expiración del magic link: 1 hora (3600 segundos).
+jwt_expiry = 3600
+
+# Desactivar registro con contraseña — solo magic link.
+enable_signup = true
+
+[auth.email]
+# Magic link habilitado (passwordless). No se usa contraseña.
+enable_signup = true
+double_confirm_changes = false
+# OTP expira en 1 hora.
+otp_expiry = 3600
+
+# SMTP custom (Resend) — los valores reales van en el dashboard de Supabase,
+# NO en este archivo (para no exponer credenciales en el repo).
+# Ver README.md → "Configurar SMTP con Resend" para los pasos exactos.
+[auth.email.smtp]
+# host     = "smtp.resend.com"          # configurar en dashboard
+# port     = 465                         # configurar en dashboard
+# user     = "resend"                    # configurar en dashboard
+# pass     = "re_xxxx"                   # NUNCA en este archivo — usar dashboard
+# admin_email = "mundial@mail.mirror.com.co"
+# sender_name = "Mirror Mundial"
