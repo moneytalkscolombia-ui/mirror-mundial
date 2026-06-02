@@ -1,0 +1,4 @@
+supabase/.temp/
+supabase/config.toml.old
+.env
+.env.local
