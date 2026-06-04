@@ -1,0 +1,136 @@
+.card {
+  background: #1B3FA0;
+  color: #FFFFFF;
+  border-radius: 12px;
+  padding: 32px;
+  max-width: 640px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.headline {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.headline span {
+  color: #FFD400;
+}
+
+.prizes {
+  font-size: 0.85rem;
+  opacity: 0.85;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.match-info {
+  background: rgba(255,255,255,0.08);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+}
+
+.match-teams {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 2px;
+}
+
+.match-date {
+  opacity: 0.75;
+  font-size: 0.8rem;
+  text-transform: capitalize;
+}
+
+.players-count {
+  font-size: 0.8rem;
+  opacity: 0.7;
+  margin-bottom: 24px;
+}
+
+.players-count strong {
+  color: #FFD400;
+  opacity: 1;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.input {
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 2px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.08);
+  color: #FFFFFF;
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.input::placeholder {
+  color: rgba(255,255,255,0.45);
+}
+
+.input:focus {
+  border-color: #FFD400;
+}
+
+.btn {
+  padding: 13px 24px;
+  border-radius: 8px;
+  border: none;
+  background: #FFD400;
+  color: #1B3FA0;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.error-msg {
+  color: #CE1126;
+  background: rgba(206,17,38,0.1);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 0.85rem;
+}
+
+.sent-msg {
+  background: rgba(255,255,255,0.08);
+  border-radius: 8px;
+  padding: 16px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.sent-msg strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #FFD400;
+}
+
+@media (max-width: 599px) {
+  .card {
+    padding: 24px;
+    border-radius: 8px;
+  }
+  .headline {
+    font-size: 1.25rem;
+  }
+}

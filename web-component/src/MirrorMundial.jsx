@@ -25,12 +25,14 @@ export default function MirrorMundial({ hostElement }) {
   const [profile, setProfile] = useState(null)
   const [currentMatch, setCurrentMatch] = useState(null)
   const [status, setStatus] = useState('anonymous')
+  const [playersCount, setPlayersCount] = useState(0)
   const realtimeRef = useRef(null)
 
   useEffect(() => {
     let authSub
 
     async function init() {
+      loadPlayersCount()
       const { user: u } = await getCurrentUser()
       const resolved = u ?? null
       setUser(resolved)
@@ -69,6 +71,13 @@ export default function MirrorMundial({ hostElement }) {
     if (user === undefined) return
     setStatus(deriveStatus({ user, profile, match: currentMatch }))
   }, [user, profile, currentMatch])
+
+  async function loadPlayersCount() {
+    const { count } = await supabase
+      .from('leaderboard')
+      .select('*', { count: 'exact', head: true })
+    setPlayersCount(count ?? 0)
+  }
 
   async function loadProfile(userId) {
     const { data: profileData } = await supabase
@@ -132,7 +141,7 @@ export default function MirrorMundial({ hostElement }) {
 
   if (user === undefined) return null
 
-  const sharedProps = { user, profile, currentMatch, hostElement }
+  const sharedProps = { user, profile, currentMatch, playersCount, hostElement }
 
   switch (status) {
     case 'anonymous':         return <Anonymous {...sharedProps} />
