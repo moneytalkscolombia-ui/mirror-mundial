@@ -2,3 +2,13 @@ supabase/.temp/
 supabase/config.toml.old
 .env
 .env.local
+
+# Node — cualquier ubicación dentro del repo
+**/node_modules/
+
+# Vite build output
+web-component/dist/
+
+# Env vars del widget (el .env.example SÍ va a git)
+web-component/.env
+web-component/.env.local
