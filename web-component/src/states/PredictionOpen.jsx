@@ -16,6 +16,20 @@ function formatMatchDate(isoString) {
   }).format(date)
 }
 
+function Flag({ code }) {
+  if (!code) return null
+  return (
+    <img
+      class="flag"
+      src={`https://flagcdn.com/w40/${code}.png`}
+      srcset={`https://flagcdn.com/w80/${code}.png 2x`}
+      width="24"
+      alt=""
+      loading="lazy"
+    />
+  )
+}
+
 export default function PredictionOpen({ user, currentMatch }) {
   const [predA, setPredA] = useState('')
   const [predB, setPredB] = useState('')
@@ -115,7 +129,7 @@ export default function PredictionOpen({ user, currentMatch }) {
           <span class="colombia-badge">Colombia · Puntos × 2</span>
         )}
 
-        <h1 class="headline">{currentMatch.team_a} vs {currentMatch.team_b}</h1>
+        <h1 class="headline"><Flag code={currentMatch.flag_a} /> {currentMatch.team_a} vs {currentMatch.team_b} <Flag code={currentMatch.flag_b} /></h1>
         {matchDate && <p class="match-date">{matchDate}</p>}
 
         {existing && uiState !== 'saved' && (
@@ -132,7 +146,7 @@ export default function PredictionOpen({ user, currentMatch }) {
 
         <form onSubmit={handleSubmit}>
           <div class="score-row">
-            <div class="team">{currentMatch.team_a}</div>
+            <div class="team"><Flag code={currentMatch.flag_a} /> {currentMatch.team_a}</div>
             <input
               class="score-input"
               type="number"
@@ -154,7 +168,7 @@ export default function PredictionOpen({ user, currentMatch }) {
               onInput={(e) => setPredB(sanitize(e.target.value))}
               disabled={uiState === 'submitting'}
             />
-            <div class="team">{currentMatch.team_b}</div>
+            <div class="team">{currentMatch.team_b} <Flag code={currentMatch.flag_b} /></div>
           </div>
 
           <p class="deadline">Cierra 15 minutos antes del partido</p>

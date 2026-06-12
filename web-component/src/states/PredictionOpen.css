@@ -46,6 +46,12 @@
   margin-bottom: 16px;
 }
 
+.flag {
+  border-radius: 3px;
+  vertical-align: -2px;
+  display: inline-block;
+}
+
 .score-row {
   display: flex;
   align-items: center;
