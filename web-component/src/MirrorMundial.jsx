@@ -9,6 +9,7 @@ import Live from './states/Live.jsx'
 import Resolved from './states/Resolved.jsx'
 import ErrorEmpty from './states/ErrorEmpty.jsx'
 import Leaderboard from './Leaderboard.jsx'
+import AdminPanel from './AdminPanel.jsx'
 
 function deriveStatus({ user, profile, match }) {
   if (!user) return 'anonymous'
@@ -27,6 +28,7 @@ export default function MirrorMundial({ hostElement }) {
   const [currentMatch, setCurrentMatch] = useState(null)
   const [status, setStatus] = useState('anonymous')
   const [playersCount, setPlayersCount] = useState(0)
+  const [isAdmin, setIsAdmin] = useState(false)
   const realtimeRef = useRef(null)
 
   useEffect(() => {
@@ -38,7 +40,7 @@ export default function MirrorMundial({ hostElement }) {
       const resolved = u ?? null
       setUser(resolved)
       if (resolved) {
-        await Promise.all([loadProfile(resolved.id), loadCurrentMatch()])
+        await Promise.all([loadProfile(resolved.id), loadCurrentMatch(), loadIsAdmin(resolved.id)])
       }
     }
 
@@ -47,10 +49,11 @@ export default function MirrorMundial({ hostElement }) {
     authSub = onAuthStateChange(async (u) => {
       setUser(u)
       if (u) {
-        await Promise.all([loadProfile(u.id), loadCurrentMatch()])
+        await Promise.all([loadProfile(u.id), loadCurrentMatch(), loadIsAdmin(u.id)])
       } else {
         setProfile(null)
         setCurrentMatch(null)
+        setIsAdmin(false)
       }
     })
 
@@ -72,6 +75,11 @@ export default function MirrorMundial({ hostElement }) {
     if (user === undefined) return
     setStatus(deriveStatus({ user, profile, match: currentMatch }))
   }, [user, profile, currentMatch])
+
+  async function loadIsAdmin(userId) {
+    const { data } = await supabase.rpc('is_admin', { p_user_id: userId })
+    setIsAdmin(!!data)
+  }
 
   async function loadPlayersCount() {
     const { count } = await supabase
@@ -166,6 +174,7 @@ export default function MirrorMundial({ hostElement }) {
     <div>
       {stateView}
       {showLeaderboard && <Leaderboard user={user} refreshKey={currentMatch?.id} />}
+      {isAdmin && <AdminPanel />}
     </div>
   )
 }
