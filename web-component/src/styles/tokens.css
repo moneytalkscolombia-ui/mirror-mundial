@@ -3,6 +3,9 @@
   font-family: inherit;
   color: inherit;
   box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 
   --mm-blue:   #1B3FA0;
   --mm-yellow: #FFD400;
