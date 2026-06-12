@@ -9,6 +9,17 @@
   margin: 0 auto;
 }
 
+.step {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.step-content {
+  display: flex;
+  flex-direction: column;
+}
+
 .eyebrow {
   font-size: 11px;
   font-weight: 500;
@@ -36,7 +47,7 @@
 .prizes {
   list-style: none;
   padding: 0;
-  margin: 0 0 28px 0;
+  margin: 0;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -48,40 +59,34 @@
   opacity: 0.95;
 }
 
-.match-info {
-  background: rgba(255, 255, 255, 0.07);
-  border-radius: 8px;
-  padding: 14px 16px;
-  margin-bottom: 16px;
+.fineprint {
+  font-size: 0.78rem;
+  opacity: 0.5;
+  text-align: center;
+  margin-top: 4px;
 }
 
-.match-teams {
-  font-weight: 500;
-  font-size: 1rem;
-  margin-bottom: 3px;
+.progress {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 28px;
 }
 
-.match-date {
-  opacity: 0.7;
-  font-size: 0.8rem;
-  text-transform: capitalize;
+.progress-seg {
+  flex: 1;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.25);
 }
 
-.players-count {
-  font-size: 0.82rem;
-  opacity: 0.65;
-  margin-bottom: 24px;
+.progress-seg--filled {
+  background: #FFD400;
 }
 
-.players-count strong {
-  color: #FFD400;
-  font-weight: 500;
-}
-
-.form {
+.field {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 
 .input {
@@ -104,6 +109,70 @@
 
 .input:focus {
   border-color: #FFD400;
+}
+
+.input--error {
+  border-color: #CE1126;
+}
+
+.select-wrapper {
+  position: relative;
+}
+
+.select-wrapper::after {
+  content: '\25BC';
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 0.65rem;
+  color: #FFFFFF;
+  opacity: 0.6;
+}
+
+.select {
+  padding: 14px 40px 14px 16px;
+  border-radius: 8px;
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  color: #FFFFFF;
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s;
+  width: 100%;
+  box-sizing: border-box;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
+.select option {
+  background: #1B3FA0;
+  color: #FFFFFF;
+}
+
+.select:focus {
+  border-color: #FFD400;
+}
+
+.hint {
+  font-size: 0.8rem;
+  opacity: 0.55;
+  line-height: 1.4;
+}
+
+.field-error {
+  font-size: 0.8rem;
+  color: #FF6B7A;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
 }
 
 .btn {
@@ -131,11 +200,22 @@
   transition: opacity 0.05s;
 }
 
-.fineprint {
-  font-size: 0.78rem;
-  opacity: 0.5;
-  text-align: center;
-  margin-top: 10px;
+.btn-back {
+  padding: 10px 24px;
+  border-radius: 8px;
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.875rem;
+  font-weight: 400;
+  font-family: inherit;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  width: 100%;
+}
+
+.btn-back:hover {
+  opacity: 0.8;
 }
 
 .error-msg {
@@ -144,21 +224,6 @@
   background: rgba(206, 17, 38, 0.12);
   border-radius: 6px;
   padding: 10px 14px;
-}
-
-.sent-msg {
-  background: rgba(255, 255, 255, 0.07);
-  border-radius: 8px;
-  padding: 20px;
-  font-size: 0.95rem;
-  line-height: 1.55;
-}
-
-.sent-msg strong {
-  display: block;
-  margin-bottom: 6px;
-  color: #FFD400;
-  font-weight: 500;
 }
 
 @media (max-width: 599px) {

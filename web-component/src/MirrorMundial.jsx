@@ -141,7 +141,11 @@ export default function MirrorMundial({ hostElement }) {
 
   if (user === undefined) return null
 
-  const sharedProps = { user, profile, currentMatch, playersCount, hostElement }
+  async function handleProfileUpdated() {
+    if (user) await loadProfile(user.id)
+  }
+
+  const sharedProps = { user, profile, currentMatch, playersCount, hostElement, onProfileUpdated: handleProfileUpdated }
 
   switch (status) {
     case 'anonymous':         return <Anonymous {...sharedProps} />

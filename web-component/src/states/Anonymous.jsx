@@ -1,7 +1,7 @@
 import { h } from 'preact'
 import { useState } from 'preact/hooks'
 import { signInWithMagicLink } from '../supabase.js'
-import anonymousStyles from './Anonymous.css?inline'
+import styles from './Anonymous.css?inline'
 
 const EMAIL_RE = /.+@.+\..+/
 
@@ -27,7 +27,7 @@ export default function Anonymous({ currentMatch, playersCount }) {
     e.preventDefault()
 
     if (!EMAIL_RE.test(email.trim())) {
-      setErrorMsg('Ingresá un email válido.')
+      setErrorMsg('Escribe un email válido.')
       setUiState('error')
       return
     }
@@ -38,7 +38,7 @@ export default function Anonymous({ currentMatch, playersCount }) {
     const { error } = await signInWithMagicLink(email.trim())
 
     if (error) {
-      setErrorMsg('Algo salió mal. Intentá de nuevo.')
+      setErrorMsg('Algo salió mal. Intenta de nuevo.')
       setUiState('error')
     } else {
       setUiState('sent')
@@ -49,12 +49,17 @@ export default function Anonymous({ currentMatch, playersCount }) {
 
   return (
     <div>
-      <style>{anonymousStyles}</style>
+      <style>{styles}</style>
       <div class="card">
-        <h2 class="headline">El Mundial, <span>sin filtros.</span></h2>
-        <p class="prizes">
-          🏆 1° lugar: outfit Mirror completo · 2°: tenis · 3°: dos camisetas
-        </p>
+        <p class="eyebrow">Mirror Mundial</p>
+        <h1 class="headline">Predice el Mundial. Gana premios reales.</h1>
+        <p class="subtitle">Predice los marcadores, suma puntos y compite por el ranking.</p>
+
+        <ul class="prizes">
+          <li class="prize-item">🥇 Primer lugar — Outfit completo Mirror</li>
+          <li class="prize-item">🥈 Segundo — Un par de tenis</li>
+          <li class="prize-item">🥉 Tercero — Dos camisetas</li>
+        </ul>
 
         {currentMatch && (
           <div class="match-info">
@@ -71,8 +76,8 @@ export default function Anonymous({ currentMatch, playersCount }) {
 
         {uiState === 'sent' ? (
           <div class="sent-msg">
-            <strong>¡Listo! Revisá tu email.</strong>
-            Si no lo ves en 1 minuto, revisá spam.
+            <strong>¡Listo! Revisa tu email.</strong>
+            Te enviamos un link para entrar. Si no lo ves en 1 minuto, revisa spam.
           </div>
         ) : (
           <form class="form" onSubmit={handleSubmit}>
@@ -92,6 +97,7 @@ export default function Anonymous({ currentMatch, playersCount }) {
             <button class="btn" type="submit" disabled={uiState === 'submitting'}>
               {uiState === 'submitting' ? 'Enviando…' : 'Predecir gratis'}
             </button>
+            <p class="fineprint">Gratis. No necesitas comprar nada.</p>
           </form>
         )}
       </div>
