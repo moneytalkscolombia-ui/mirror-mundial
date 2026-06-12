@@ -168,5 +168,4 @@ export default function MirrorMundial({ hostElement }) {
       {showLeaderboard && <Leaderboard user={user} refreshKey={currentMatch?.id} />}
     </div>
   )
-  }
 }
