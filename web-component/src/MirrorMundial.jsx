@@ -8,6 +8,7 @@ import PredictionLocked from './states/PredictionLocked.jsx'
 import Live from './states/Live.jsx'
 import Resolved from './states/Resolved.jsx'
 import ErrorEmpty from './states/ErrorEmpty.jsx'
+import Leaderboard from './Leaderboard.jsx'
 
 function deriveStatus({ user, profile, match }) {
   if (!user) return 'anonymous'
@@ -147,13 +148,25 @@ export default function MirrorMundial({ hostElement }) {
 
   const sharedProps = { user, profile, currentMatch, playersCount, hostElement, onProfileUpdated: handleProfileUpdated }
 
-  switch (status) {
-    case 'anonymous':         return <Anonymous {...sharedProps} />
-    case 'onboarding':        return <Onboarding {...sharedProps} />
-    case 'prediction_open':   return <PredictionOpen {...sharedProps} />
-    case 'prediction_locked': return <PredictionLocked {...sharedProps} />
-    case 'live':              return <Live {...sharedProps} />
-    case 'resolved':          return <Resolved {...sharedProps} />
-    default:                  return <ErrorEmpty {...sharedProps} />
+  const stateView = (() => {
+    switch (status) {
+      case 'anonymous':         return <Anonymous {...sharedProps} />
+      case 'onboarding':        return <Onboarding {...sharedProps} />
+      case 'prediction_open':   return <PredictionOpen {...sharedProps} />
+      case 'prediction_locked': return <PredictionLocked {...sharedProps} />
+      case 'live':              return <Live {...sharedProps} />
+      case 'resolved':          return <Resolved {...sharedProps} />
+      default:                  return <ErrorEmpty {...sharedProps} />
+    }
+  })()
+
+  const showLeaderboard = user && status !== 'anonymous' && status !== 'onboarding'
+
+  return (
+    <div>
+      {stateView}
+      {showLeaderboard && <Leaderboard user={user} refreshKey={currentMatch?.id} />}
+    </div>
+  )
   }
 }

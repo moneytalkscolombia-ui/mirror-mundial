@@ -1,0 +1,92 @@
+.lb-card {
+  background: #1B3FA0;
+  color: #FFFFFF;
+  border-radius: 12px;
+  padding: 32px 40px;
+  max-width: 520px;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 16px auto 0;
+}
+
+.lb-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.lb-title {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: #FFD400;
+}
+
+.lb-count {
+  font-size: 0.78rem;
+  opacity: 0.6;
+}
+
+.lb-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lb-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.lb-row--me {
+  background: rgba(255, 212, 0, 0.14);
+  border-left: 3px solid #FFD400;
+}
+
+.lb-rank {
+  width: 24px;
+  opacity: 0.55;
+  font-size: 0.82rem;
+  flex-shrink: 0;
+}
+
+.lb-name {
+  flex: 1;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lb-points {
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.lb-empty {
+  font-size: 0.88rem;
+  opacity: 0.7;
+  line-height: 1.5;
+}
+
+.lb-me-outside {
+  margin-top: 10px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+@media (max-width: 599px) {
+  .lb-card {
+    padding: 26px 24px;
+    border-radius: 10px;
+  }
+}
