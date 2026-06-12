@@ -40,7 +40,7 @@ function validateName(val) {
 }
 
 export default function Onboarding({ user, onProfileUpdated }) {
-  const [step, setStep] = useState('welcome')
+  const [step, setStep] = useState('nickname')
   const [name, setName] = useState('')
   const [nameError, setNameError] = useState(null)
   const [champion, setChampion] = useState('')
@@ -143,7 +143,7 @@ export default function Onboarding({ user, onProfileUpdated }) {
                 <input
                   class={'input' + (nameError ? ' input--error' : '')}
                   type="text"
-                  placeholder="carolina_macias"
+                  placeholder="Carlos_medellin"
                   value={name}
                   onInput={handleNameInput}
                   maxLength={20}
