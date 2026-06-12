@@ -16,12 +16,25 @@ const TEAMS = [
   'Túnez', 'Uruguay', 'Uzbekistán',
 ]
 
-const NAME_REGEX = /^[a-zA-Z0-9_]+$/
+const NAME_REGEX = /^[a-z0-9_]+$/
+
+function normalizeName(raw) {
+  return raw
+    .toLowerCase()
+    .replace(/\s+/g, '_')
+    .replace(/[áàä]/g, 'a')
+    .replace(/[éèë]/g, 'e')
+    .replace(/[íìï]/g, 'i')
+    .replace(/[óòö]/g, 'o')
+    .replace(/[úùü]/g, 'u')
+    .replace(/ñ/g, 'n')
+    .replace(/[^a-z0-9_]/g, '')
+    .slice(0, 20)
+}
 
 function validateName(val) {
-  if (!val) return null
+  if (!val) return 'Escribe un apodo.'
   if (val.length < 3) return 'Mínimo 3 letras.'
-  if (val.length > 20) return 'Máximo 20 letras.'
   if (!NAME_REGEX.test(val)) return 'Solo letras, números y guion bajo.'
   return null
 }
@@ -30,25 +43,31 @@ export default function Onboarding({ user, onProfileUpdated }) {
   const [step, setStep] = useState('welcome')
   const [name, setName] = useState('')
   const [nameError, setNameError] = useState(null)
-  const [nameTouched, setNameTouched] = useState(false)
   const [champion, setChampion] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState(null)
 
-  const nameValid = name.length >= 3 && name.length <= 20 && NAME_REGEX.test(name)
+  const nameValid = validateName(name) === null
   const championValid = champion !== ''
 
   const progressFirst = step === 'nickname' || step === 'champion'
   const progressSecond = step === 'champion'
 
   function handleNameInput(e) {
-    setName(e.target.value)
-    if (nameTouched) setNameError(validateName(e.target.value))
+    const normalized = normalizeName(e.target.value)
+    setName(normalized)
+    if (nameError) setNameError(validateName(normalized))
   }
 
-  function handleNameBlur() {
-    setNameTouched(true)
-    setNameError(validateName(name))
+  function handleContinue() {
+    const err = validateName(name)
+    if (err) {
+      setNameError(err)
+      return
+    }
+    setNameError(null)
+    setSubmitError(null)
+    setStep('champion')
   }
 
   function handleChampionInput(e) {
@@ -122,30 +141,23 @@ export default function Onboarding({ user, onProfileUpdated }) {
               <p class="subtitle">Así te van a ver el resto de jugadores en el ranking.</p>
               <div class="field">
                 <input
-                  class={'input' + (nameTouched && nameError ? ' input--error' : '')}
+                  class={'input' + (nameError ? ' input--error' : '')}
                   type="text"
-                  placeholder="andres_bog"
+                  placeholder="carolina_macias"
                   value={name}
                   onInput={handleNameInput}
-                  onBlur={handleNameBlur}
                   maxLength={20}
                   autocomplete="off"
                 />
-                {nameTouched && nameError
+                {nameError
                   ? <span class="field-error">{nameError}</span>
-                  : <span class="hint">Mínimo 3 letras. Solo letras, números y guion bajo.</span>
+                  : <span class="hint">Si escribes espacios los convertimos en guion bajo. Mínimo 3 letras.</span>
                 }
               </div>
               {submitError && <div class="error-msg">{submitError}</div>}
             </div>
             <div class="actions">
-              <button
-                class="btn"
-                disabled={!nameValid}
-                onClick={() => { setSubmitError(null); setStep('champion') }}
-              >
-                Continuar →
-              </button>
+              <button class="btn" onClick={handleContinue}>Continuar →</button>
               <button class="btn-back" onClick={() => setStep('welcome')}>← Volver</button>
             </div>
           </div>
@@ -160,7 +172,7 @@ export default function Onboarding({ user, onProfileUpdated }) {
               </div>
               <p class="eyebrow">Paso 2 de 2 · Último</p>
               <h1 class="headline">¿Quién crees que gana el Mundial?</h1>
-              <p class="subtitle">Elige el equipo que crees que se queda con la copa.</p>
+              <p class="subtitle">Si aciertas el campeón, ganas 15 puntos extra al final del Mundial.</p>
               <div class="field">
                 <div class="select-wrapper">
                   <select

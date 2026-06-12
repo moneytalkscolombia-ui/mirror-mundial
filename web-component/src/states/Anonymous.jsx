@@ -26,7 +26,9 @@ export default function Anonymous({ currentMatch, playersCount }) {
   async function handleSubmit(e) {
     e.preventDefault()
 
-    if (!EMAIL_RE.test(email.trim())) {
+    const clean = email.trim().toLowerCase()
+
+    if (!EMAIL_RE.test(clean)) {
       setErrorMsg('Escribe un email válido.')
       setUiState('error')
       return
@@ -35,7 +37,7 @@ export default function Anonymous({ currentMatch, playersCount }) {
     setUiState('submitting')
     setErrorMsg('')
 
-    const { error } = await signInWithMagicLink(email.trim())
+    const { error } = await signInWithMagicLink(clean)
 
     if (error) {
       setErrorMsg('Algo salió mal. Intenta de nuevo.')
@@ -98,6 +100,7 @@ export default function Anonymous({ currentMatch, playersCount }) {
               {uiState === 'submitting' ? 'Enviando…' : 'Predecir gratis'}
             </button>
             <p class="fineprint">Gratis. No necesitas comprar nada.</p>
+            <p class="fineprint">¿Ya jugaste antes? Usa el mismo email y entras a tu cuenta.</p>
           </form>
         )}
       </div>

@@ -1,0 +1,44 @@
+credenciales AR para mirror mundial_
+
+
+-- ============================================
+-- KIT ADMIN MIRROR MUNDIAL
+-- SQL Editor: https://supabase.com/dashboard/project/uathsyapwrxfmqbjnnhj/sql/new
+-- ============================================
+
+-- 1. AGREGAR PARTIDO
+-- stage: 'grupo' | 'octavos' | 'cuartos' | 'semi' | 'tercero' | 'final'
+-- kickoff_at en UTC: hora Colombia + 5 (ej: 9pm COL = 02:00 del día siguiente UTC)
+-- flags: código de 2 letras minúsculas (co, br, ar, us, mx, fr, de, pt, es, uz, cd...)
+INSERT INTO matches (team_a, team_b, kickoff_at, status, is_colombia, stage, flag_a, flag_b)
+VALUES ('Equipo A', 'Equipo B', '2026-06-20T02:00:00Z', 'scheduled', false, 'grupo', 'xx', 'yy');
+
+-- 2. MARCAR PARTIDO EN VIVO (cuando empieza)
+UPDATE matches SET status = 'live' WHERE id = MATCH_ID;
+
+-- 3. RESOLVER PARTIDO (al terminar; calcula puntos de TODOS + refresca leaderboard)
+-- Marcador con tiempo extra incluido, SIN penales
+SELECT resolve_match_db(MATCH_ID, GOLES_A, GOLES_B);
+
+-- 4. MARCAR CLIENTE VIP (+10 pts bonus)
+UPDATE profiles SET is_vip = true, vip_bonus_points = 10
+WHERE email = 'cliente@email.com';
+REFRESH MATERIALIZED VIEW leaderboard;
+
+-- 5. VER TODOS LOS PARTIDOS (ids, estados, fechas)
+SELECT id, team_a, team_b, kickoff_at AT TIME ZONE 'America/Bogota' AS hora_colombia, status, is_colombia
+FROM matches ORDER BY kickoff_at;
+
+-- 6. VER RANKING COMPLETO
+SELECT rank, display_name, total_points, is_vip, exact_predictions
+FROM leaderboard ORDER BY rank;
+
+-- 7. BONUS CAMPEÓN (correr UNA SOLA VEZ, al terminar la final)
+-- Reemplazá 'Argentina' por el campeón real del Mundial
+UPDATE profiles
+SET vip_bonus_points = vip_bonus_points + 15
+WHERE champion_pick = 'Argentina';
+REFRESH MATERIALIZED VIEW leaderboard;
+
+-- Verificar quiénes lo recibieron:
+SELECT display_name, champion_pick, vip_bonus_points FROM profiles WHERE champion_pick = 'Argentina';
