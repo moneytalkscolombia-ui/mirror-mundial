@@ -108,6 +108,21 @@ export default function MirrorMundial({ hostElement }) {
   }
 
   async function loadCurrentMatch() {
+    // PRIORIDAD 1: partido live (en juego ahora)
+    const { data: live } = await supabase
+      .from('matches')
+      .select('*')
+      .eq('status', 'live')
+      .order('kickoff_at', { ascending: false })
+      .limit(1)
+      .maybeSingle()
+
+    if (live) {
+      setCurrentMatch({ ...live, is_open: false })
+      return
+    }
+
+    // PRIORIDAD 2: próximo partido (scheduled o locked)
     const { data: upcoming } = await supabase
       .from('matches')
       .select('*')
@@ -124,19 +139,7 @@ export default function MirrorMundial({ hostElement }) {
       return
     }
 
-    const { data: live } = await supabase
-      .from('matches')
-      .select('*')
-      .eq('status', 'live')
-      .order('kickoff_at', { ascending: false })
-      .limit(1)
-      .maybeSingle()
-
-    if (live) {
-      setCurrentMatch({ ...live, is_open: false })
-      return
-    }
-
+    // PRIORIDAD 3: último partido resuelto
     const { data: resolved } = await supabase
       .from('matches')
       .select('*')

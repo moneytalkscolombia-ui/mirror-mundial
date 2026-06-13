@@ -46,9 +46,10 @@ export default function Leaderboard({ user, refreshKey }) {
   if (!loaded) return null
 
   function renderRow(r, extraClass) {
+    const medal = r.rank === 1 ? '🥇' : r.rank === 2 ? '🥈' : r.rank === 3 ? '🥉' : null
     return (
       <li key={r.user_id} class={'lb-row' + (r.user_id === user.id ? ' lb-row--me' : '') + (extraClass || '')}>
-        <span class="lb-rank">{r.rank}</span>
+        <span class="lb-rank">{medal || r.rank}</span>
         <span class="lb-name">
           {r.display_name}
           {r.is_vip && <span class="lb-vip">VIP</span>}
@@ -75,6 +76,18 @@ export default function Leaderboard({ user, refreshKey }) {
             {myRow && renderRow(myRow, ' lb-me-outside')}
           </ul>
         )}
+
+        <div class="lb-scoring">
+          <p class="lb-scoring-title">¿Cómo se suman puntos?</p>
+          <div class="lb-scoring-grid">
+            <span>Marcador exacto</span><span>5 pts</span>
+            <span>Ganador + diferencia</span><span>3 pts</span>
+            <span>Empate (no exacto)</span><span>2 pts</span>
+            <span>Solo el ganador</span><span>1 pt</span>
+            <span class="lb-scoring-highlight">Partido de Colombia</span><span class="lb-scoring-highlight">× 2</span>
+            <span class="lb-scoring-highlight">Campeón del Mundial</span><span class="lb-scoring-highlight">+15 pts</span>
+          </div>
+        </div>
       </div>
     </div>
   )
