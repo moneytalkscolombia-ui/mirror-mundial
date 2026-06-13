@@ -78,16 +78,60 @@ export default function Leaderboard({ user, refreshKey }) {
         )}
 
         <div class="lb-scoring">
-          <p class="lb-scoring-title">¿Cómo se suman puntos?</p>
-          <div class="lb-scoring-grid">
-            <span>Marcador exacto</span><span>5 pts</span>
-            <span>Ganador + diferencia</span><span>3 pts</span>
-            <span>Empate (no exacto)</span><span>2 pts</span>
-            <span>Solo el ganador</span><span>1 pt</span>
-            <span class="lb-scoring-highlight">Partido de Colombia</span><span class="lb-scoring-highlight">× 2</span>
-            <span class="lb-scoring-highlight">Campeón del Mundial</span><span class="lb-scoring-highlight">+15 pts</span>
+          <p class="lb-scoring-title">¿Cómo se suman los puntos?</p>
+          <div class="lb-scoring-rows">
+            <div class="lb-scoring-row">
+              <span class="lb-scoring-badge lb-scoring-badge--full">5 pts</span>
+              <div>
+                <div class="lb-scoring-name">Marcador exacto</div>
+                <div class="lb-scoring-ex">Predijiste 2-1 y quedó 2-1</div>
+              </div>
+            </div>
+            <div class="lb-scoring-row">
+              <span class="lb-scoring-badge lb-scoring-badge--mid">3 pts</span>
+              <div>
+                <div class="lb-scoring-name">Ganador + diferencia de goles</div>
+                <div class="lb-scoring-ex">Predijiste 3-1 y quedó 2-0</div>
+              </div>
+            </div>
+            <div class="lb-scoring-row">
+              <span class="lb-scoring-badge lb-scoring-badge--mid">2 pts</span>
+              <div>
+                <div class="lb-scoring-name">Empate predicho, marcador errado</div>
+                <div class="lb-scoring-ex">Predijiste 1-1 y quedó 2-2</div>
+              </div>
+            </div>
+            <div class="lb-scoring-row">
+              <span class="lb-scoring-badge lb-scoring-badge--mid">1 pt</span>
+              <div>
+                <div class="lb-scoring-name">Solo el ganador</div>
+                <div class="lb-scoring-ex">Predijiste 1-0 y quedó 3-1</div>
+              </div>
+            </div>
+            <div class="lb-scoring-row lb-scoring-row--dim">
+              <span class="lb-scoring-badge lb-scoring-badge--zero">0 pts</span>
+              <div>
+                <div class="lb-scoring-name">Errado</div>
+                <div class="lb-scoring-ex">Predijiste 1-0 y ganó el otro equipo</div>
+              </div>
+            </div>
+            <div class="lb-scoring-row lb-scoring-row--bonus">
+              <span class="lb-scoring-badge lb-scoring-badge--bonus">× 2</span>
+              <div>
+                <div class="lb-scoring-name lb-scoring-name--gold">Partidos de Colombia valen doble</div>
+                <div class="lb-scoring-ex">Exacto en Colombia = 10 pts</div>
+              </div>
+            </div>
+            <div class="lb-scoring-row lb-scoring-row--bonus">
+              <span class="lb-scoring-badge lb-scoring-badge--bonus">+15 pts</span>
+              <div>
+                <div class="lb-scoring-name lb-scoring-name--gold">Si adivinas el campeón del Mundial</div>
+                <div class="lb-scoring-ex">El mayor bonus — se revela al final</div>
+              </div>
+            </div>
           </div>
         </div>
+
       </div>
     </div>
   )

@@ -112,19 +112,74 @@
   margin-bottom: 12px;
 }
 
-.lb-scoring-grid {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 8px 16px;
-  font-size: 0.82rem;
-  opacity: 0.85;
-  line-height: 1.4;
+.lb-scoring-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.lb-scoring-highlight {
-  color: #FFD400;
-  opacity: 1;
+.lb-scoring-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.lb-scoring-row--dim {
+  opacity: 0.55;
+}
+
+.lb-scoring-row--bonus {
+  background: rgba(255, 212, 0, 0.1);
+  border: 1px solid rgba(255, 212, 0, 0.25);
+}
+
+.lb-scoring-badge {
+  min-width: 52px;
+  text-align: center;
+  border-radius: 6px;
+  padding: 6px 4px;
+  font-size: 0.82rem;
   font-weight: 500;
+  flex-shrink: 0;
+  line-height: 1.2;
+}
+
+.lb-scoring-badge--full {
+  background: #FFD400;
+  color: #1B3FA0;
+}
+
+.lb-scoring-badge--mid {
+  background: rgba(255, 212, 0, 0.2);
+  color: #FFD400;
+}
+
+.lb-scoring-badge--zero {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.lb-scoring-badge--bonus {
+  background: #FFD400;
+  color: #1B3FA0;
+}
+
+.lb-scoring-name {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.lb-scoring-name--gold {
+  color: #FFD400;
+}
+
+.lb-scoring-ex {
+  font-size: 0.73rem;
+  opacity: 0.6;
+  margin-top: 2px;
 }
 
 @media (max-width: 599px) {
